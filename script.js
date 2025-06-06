@@ -1,9 +1,32 @@
-// Set current year in footer
+// ===============================
+// 1. Set Current Year in Footer
+// ===============================
 document.getElementById("year").textContent = new Date().getFullYear();
 
-// Optional: scroll to section on nav click (already handled by # link + smooth-scroll CSS)
 
-// Future enhancements:
-// - Add project filtering
-// - Contact form validation
-// - Theme toggle or animation
+// =====================================
+// 2. Scroll-triggered Fade-in Animation
+// =====================================
+
+// Select all elements with class 'fade-in'
+const faders = document.querySelectorAll('.fade-in');
+
+// Create IntersectionObserver instance
+const appearOnScroll = new IntersectionObserver((entries, observer) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+
+    // Add 'visible' class when in view
+    entry.target.classList.add('visible');
+
+    // Stop observing once it has appeared
+    observer.unobserve(entry.target);
+  });
+}, {
+  threshold: 0.1, // Trigger when 10% is visible
+});
+
+// Observe each .fade-in element
+faders.forEach(fade => {
+  appearOnScroll.observe(fade);
+});
